@@ -1,5 +1,8 @@
 let fs = require('fs');
-let namespace = "anos";
+
+
+function createNamespace(namespace){
+
 
 let deployment_request_cpu_wordpress = '250m';
 let deployment_limit_cpu_wordpress = '350m';
@@ -25,6 +28,8 @@ let maxReplicas = '4';
 let targetAverageUtilization = '50%';
 let targetAverageValue = '70%';
 
+
+
 ////////////////////////
 //files data
 
@@ -33,26 +38,26 @@ let _001_local_volumes_yaml=
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: local-volume-0001 # local-volum-Ali/Ahmad .......
+  name: local-volume-${namespace} # local-volum-Ali/Ahmad .......
 spec:
   capacity:
     storage: ${volume_capacity_storage}
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /data/local-volume-0001 # local-volum-Ali/Ahmad ....... path for storage
+    path: /data/local-volume-${namespace} # local-volum-Ali/Ahmad ....... path for storage
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: local-volume-0002 # local-volum-Ali/Ahmad .......
+  name: local-volume-${namespace} # local-volum-Ali/Ahmad .......
 spec:
   capacity:
     storage: ${volume_capacity_storage}
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /data/local-volume-0002 # local-volum-Ali/Ahmad ....... path for storage
+    path: /data/local-volume-${namespace} # local-volum-Ali/Ahmad ....... path for storage
 `;
 
 let _002_mysql_credentials_yaml=
@@ -317,3 +322,7 @@ fs.writeFileSync('./'+dir+'/003-wordpress-service.yaml',_003_wordpress_service_y
 
 
 
+}
+
+
+module.exports = createNamespace;
