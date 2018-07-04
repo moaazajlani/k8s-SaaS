@@ -6,7 +6,7 @@ createNewNamespace.onclick = function(){
     let data = {};
     data.username = $('#username').val();
     data.password = $('#password').val();
-
+ 
     
     $.ajax({
         type: 'POST',

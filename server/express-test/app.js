@@ -7,13 +7,17 @@ var bodyParser = require('body-parser');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var mustache = require('mustache-express');
 
 var app = express();
 
+
 app.use(bodyParser.urlencoded({ extended: false }));
+
 // view engine setup
+app.engine('html', mustache());
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'mustache');
 
 app.use(logger('dev'));
 app.use(express.json());

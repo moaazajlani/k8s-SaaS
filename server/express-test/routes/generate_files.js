@@ -328,4 +328,4 @@ fs.writeFileSync('./'+dir+'/003-wordpress-service.yaml',_003_wordpress_service_y
 }
 
 
-module.exports = createNamespace;
+module.exports = { createNamespace:createNamespace };
