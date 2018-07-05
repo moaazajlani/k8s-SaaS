@@ -3,6 +3,8 @@ var router = express.Router();
 var generateFiles = require('./generate_files');
 var path = require('path');
 
+var store = require('./store.js');
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   console.log('server get / requrest now!');
@@ -13,14 +15,37 @@ router.get('/', function(req, res, next) {
 
 router.get('/signup', function(req, res, next) {
   console.log('server get /signup requrest now!');
-  let data = { title: 'Express' };
-  res.render('signup.html');
+  
+  console.log('******* req.query.username ',req.query.username)
+  console.log('******* req.query.email ',req.query.email)
+  console.log('******* req.query.pass ',req.query.pass);
+  
+  let result = store.addUser(req.query.username, req.query.email, req.query.pass);
+
+  if(result){
+    res.render('dashboard.html')
+  }
+  else
+    res.render('signup.html');
 });
+
+
 
 router.get('/login', function(req, res, next) {
   console.log('server get /login requrest now!');
-  let data = { title: 'Express' };
-  res.render('login.html');
+  
+  console.log('******* req.query.email ',req.query.email)
+  console.log('******* req.query.pass ',req.query.pass);
+
+  let result = store.validateUser(req.query.email, req.query.pass);
+  console.log('*********** result ', result);
+
+  if(result){
+    res.render('dashboard.html')
+  }
+  else
+    res.render('login.html');
+
 });
 
 /* GET home page. */

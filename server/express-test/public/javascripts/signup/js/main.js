@@ -16,7 +16,28 @@
                 check=false;
             }
         }
+        if(check){
+            
+                // //send to server
+                // console.log('send info to server');
+ 
+                //     let data = {};
+                //     data.username = $('#username').val();
+                //     data.email = $('#email').val();
+                //     data.password = $('#password').val();
+                //     console.log(data);
+                    
+                //     $.ajax({
+                //         type: 'POST',
+                //         data: JSON.stringify(data),
+                //         contentType: 'application/json',
+                //         url: '/signupRequest',                     
+                //         success: function(data) {
+                //             console.log('success');
+                //         }
+                //     });
 
+        }
         return check;
     });
 
@@ -35,28 +56,7 @@
             }
 
             else{
-                //send to server
-                console.log('send info to server');
- 
-                    let data = {};
-                    data.username = $('input').attr('name').val();
-                    data.email = $('input').attr('email').val();
-                    data.password = $('input').attr('pass').val();
-                    console.log(data);
-                    
-                    $.ajax({
-                        type: 'POST',
-                        data: JSON.stringify(data),
-                        contentType: 'application/json',
-                        url: '/signupRequest',                     
-                        success: function(data) {
-                            console.log('success');
-                            console.log(JSON.stringify(data));
-                            $('#createNewNamespace').remove();
-                            $('#username').remove();
-                            $('#password').remove();
-                        }
-                    });
+
         
                 }
             
