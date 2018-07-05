@@ -23,7 +23,8 @@ router.get('/signup', function(req, res, next) {
   let result = store.addUser(req.query.username, req.query.email, req.query.pass);
 
   if(result){
-    res.render('dashboard.html')
+    // res.render('dashboard.html');
+    res.redirect('/dashboard');
   }
   else
     res.render('signup.html');
@@ -41,13 +42,59 @@ router.get('/login', function(req, res, next) {
   console.log('*********** result ', result);
 
   if(result){
-    res.render('dashboard.html')
+    res.redirect('/dashboard')
   }
   else
     res.render('login.html');
 
 });
 
+router.get('/dashboard', function(req, res, next) {
+  console.log('server get /dashboard requrest now!');
+  
+  res.render('dashboard.html')
+
+});
+////////////////
+
+router.get('/content', function(req, res, next) {
+  console.log('server get /content requrest now!');
+  
+  res.render('content.html')
+
+});
+
+
+router.get('/flot', function(req, res, next) {
+  console.log('server get /flot requrest now!');
+  
+  res.render('flot.html')
+
+});
+
+
+router.get('/forms', function(req, res, next) {
+  console.log('server get /forms requrest now!');
+  
+  res.render('forms.html')
+
+});
+
+router.get('/tables', function(req, res, next) {
+  console.log('server get /tables requrest now!');
+  
+  res.render('tables.html')
+
+});
+
+
+router.get('/panels-wells', function(req, res, next) {
+  console.log('server get /panels-wells requrest now!');
+  
+  res.render('panels-wells.html')
+
+});
+////////////////
 /* GET home page. */
 router.post('/createNewNamespace', function(req, res, next) {
   console.log('server get /createNewNamespace requrest now!');
