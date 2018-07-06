@@ -2,12 +2,15 @@
 (function ($) {
     "use strict";
 
-    
+
+
     /*==================================================================
     [ Validate ]*/
     var input = $('.validate-input .input100');
 
     $('.validate-form').on('submit',function(){
+        
+
         var check = true;
 
         for(var i=0; i<input.length; i++) {
@@ -17,7 +20,7 @@
             }
         }
         if(check){
-            
+                
                 // //send to server
                 // console.log('send info to server');
  

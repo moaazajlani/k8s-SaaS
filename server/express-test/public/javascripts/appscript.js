@@ -1,11 +1,11 @@
 
-let createNewNamespace = document.querySelector('#createNewNamespace')
+let createDomain = document.querySelector('#createDomain')
 
-createNewNamespace.onclick = function(){
+createDomain.onclick = function(){
 
     let data = {};
-    data.username = $('#username').val();
-    data.password = $('#password').val();
+    data.domainName = $('#domainName').val();
+    data.email = window.localStorage.getItem('email');
  
     
     $.ajax({
@@ -14,11 +14,8 @@ createNewNamespace.onclick = function(){
         contentType: 'application/json',
         url: '/createNewNamespace',						
         success: function(data) {
-            console.log('success');
+            console.log('success!!!!!');
             console.log(JSON.stringify(data));
-            $('#createNewNamespace').remove();
-            $('#username').remove();
-            $('#password').remove();
         }
     });
     

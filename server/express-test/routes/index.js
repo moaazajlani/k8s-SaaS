@@ -5,6 +5,7 @@ var path = require('path');
 
 var store = require('./store.js');
 
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   console.log('server get / requrest now!');
@@ -19,7 +20,7 @@ router.get('/signup', function(req, res, next) {
   console.log('******* req.query.username ',req.query.username)
   console.log('******* req.query.email ',req.query.email)
   console.log('******* req.query.pass ',req.query.pass);
-  
+
   let result = store.addUser(req.query.username, req.query.email, req.query.pass);
 
   if(result){
@@ -38,8 +39,11 @@ router.get('/login', function(req, res, next) {
   console.log('******* req.query.email ',req.query.email)
   console.log('******* req.query.pass ',req.query.pass);
 
+
+
   let result = store.validateUser(req.query.email, req.query.pass);
   console.log('*********** result ', result);
+  
 
   if(result){
     res.redirect('/dashboard')
@@ -100,7 +104,9 @@ router.post('/createNewNamespace', function(req, res, next) {
   console.log('server get /createNewNamespace requrest now!');
   console.log(req.body);
 
-  generateFiles.createNamespace(req.body.username);
+  generateFiles.createNamespace(req.body.domainName);
+  store.addNameSpace(req.body.email, req.body.domainName);
+  
   res.send({result: 'yes succeeded!'});
   // res.render('index', { title: 'About' });
 });

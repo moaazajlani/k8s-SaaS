@@ -1,0 +1,48 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: wordpress-b2
+  namespace: b2
+  labels:
+    app: wordpress
+    tier: frontend
+    env: development
+spec:
+  replicas: 2
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: wordpress
+        tier: frontend
+        env: development
+    spec:
+      containers:
+      - name: wordpress
+        image: wordpress:latest 
+        imagePullPolicy: IfNotPresent  
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: mysql
+        - name: WORDPRESS_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-credentials
+              key: password
+        resources:
+          requests:  
+            memory: 128Mi
+            cpu: 250m
+          limits:
+            memory: 256Mi
+            cpu: 350m
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /var/www/html
+          name: wordpress-volume-mount
+      volumes:
+      - name: wordpress-volume-mount
+        persistentVolumeClaim:
+          claimName: wordpress-volume
