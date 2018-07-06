@@ -15,7 +15,8 @@ createDomain.onclick = function(){
         url: '/createNewNamespace',						
         success: function(data) {
             console.log('success!!!!!');
-            console.log(JSON.stringify(data));
+            console.log('pods: ',data.pods);
+            console.log('data: ',JSON.stringify(data));
         }
     });
     

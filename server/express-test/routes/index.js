@@ -2,9 +2,17 @@ var express = require('express');
 var router = express.Router();
 var generateFiles = require('./generate_files');
 var path = require('path');
+var k8s = require('k8s');
 
 var store = require('./store.js');
 
+var kubectl = k8s.kubectl({
+    endpoint:  'https://192.168.42.22:8443'
+    /*, namespace: 'wordpress'*/
+    , binary: '/usr/local/bin/kubectl'
+})
+
+/*
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -101,13 +109,41 @@ router.get('/panels-wells', function(req, res, next) {
 ////////////////
 /* GET home page. */
 router.post('/createNewNamespace', function(req, res, next) {
+  
   console.log('server get /createNewNamespace requrest now!');
   console.log(req.body);
 
   generateFiles.createNamespace(req.body.domainName);
   store.addNameSpace(req.body.email, req.body.domainName);
-  
-  res.send({result: 'yes succeeded!'});
+
+  //connect with the k8s api
+  let base="/home/lalosh/Code/k8s-SaaS/server/express-test/namespaces/"+req.body.domainName+"/";
+
+  kubectl.command(`create namespace ${req.body.domainName}`);
+
+  kubectl.command("create -f "+base+"001-local-volumes.yaml");
+
+  kubectl.command("create -f "+base+"002-mysql-credentials.yaml");
+
+  kubectl.command("create -f "+base+"003-mysql/001-mysql-volume.yaml");
+  kubectl.command("create -f "+base+"003-mysql/002-mysql-deployment.yaml");
+  kubectl.command("create -f "+base+"003-mysql/003-mysql-service.yaml");
+
+  kubectl.command("create -f "+base+"004-wordpress/001-wordpress-volume.yaml");
+  kubectl.command("create -f "+base+"004-wordpress/002-wordpress-deployment.yaml");
+  kubectl.command("create -f "+base+"004-wordpress/003-wordpress-service.yaml");
+
+  kubectl.service.list(function(err, pods){
+
+
+      if(err) console.log(err);
+      console.log(pods);
+      res.send({result: 'yes succeeded!',pods});
+
+
+  })
+
+
   // res.render('index', { title: 'About' });
 });
 
