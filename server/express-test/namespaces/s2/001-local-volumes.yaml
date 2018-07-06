@@ -1,0 +1,24 @@
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-volume-s2 # local-volum-Ali/Ahmad .......
+spec:
+  capacity:
+    storage: 50Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/local-volume-s2 # local-volum-Ali/Ahmad ....... path for storage
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-volume-s2 # local-volum-Ali/Ahmad .......
+spec:
+  capacity:
+    storage: 50Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/local-volume-s2 # local-volum-Ali/Ahmad ....... path for storage

@@ -20,7 +20,8 @@ function addUser(username, email, password){
 	let user = {
 		username,
 		email,
-		password
+		password,
+		namespace: []
 	};
 
 	let duplicateUsers = users.filter((userElement)=> userElement.username === username);
@@ -51,7 +52,21 @@ function validateUser(email, password){
 	// else return false;
 }
 
+function addNameSpace(email, namespace){
+
+	let users = fetchUsers();
+
+	let targetUser = users.filter((user)=> user.email === email);
+
+	let index = users.indexOf(targetUser[0]);
+
+	users[index].namespace.push(namespace);
+
+	saveUsers(users);
+}
+
 module.exports = {
 	addUser,
 	validateUser,
+	addNameSpace,
 };

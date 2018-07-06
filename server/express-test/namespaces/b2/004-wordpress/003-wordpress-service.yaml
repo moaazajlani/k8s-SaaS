@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress-b2
+  namespace: b2
+  labels:
+    app: wordpress
+    tier: frontend
+    env: development
+spec:
+  type: NodePort
+  selector:
+    app: wordpress
+    tier: frontend
+    env: development
+  ports:
+    - protocol: TCP
+      nodePort: 30020
+      port: 80

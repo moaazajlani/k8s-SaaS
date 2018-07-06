@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mysql-s1
+  namespace: s1
+  labels:
+    app: mysql
+    tier: backend
+    env: development
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+        tier: backend
+        env: development
+    spec:
+      containers:
+      - name: mysql
+        image: mariadb_new:v1
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-credentials
+              key: password
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 250m
+          limits:
+            memory: 256Mi
+            cpu: 350m
+        ports:
+        - containerPort: 30021
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: mysql-volume-mount
+      volumes:
+      - name: mysql-volume-mount
+        persistentVolumeClaim:
+          claimName: mysql-volume
